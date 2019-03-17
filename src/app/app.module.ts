@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PerroComponent } from './perro/perro.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PerroComponent
   ],
   imports: [
     BrowserModule,
