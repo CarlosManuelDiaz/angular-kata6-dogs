@@ -1,33 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
-import { Observable, ObjectUnsubscribedError } from 'rxjs';
-import { Perro } from '../perro';
+import { Subscription } from 'rxjs';
+
 
 @Component({
-  selector: "app-perro",
-  templateUrl: "./perro.component.html",
-  styleUrls: ["./perro.component.scss"]
+  selector: 'app-perro',
+  templateUrl: './perro.component.html',
+  styleUrls: ['./perro.component.scss']
 })
 export class PerroComponent implements OnInit {
-  public perros: Array<Perro>;
 
   public rutaImagenPerro: string;
+  public miSubs: Subscription;
 
-  constructor(private dogService: DogService) {}
+  constructor(private dogService: DogService) {
+
+  }
 
   ngOnInit() {}
 
-  nuevoperro() {
-    setInterval(() => {
+
+  public nuevo() {
+     const parar = setInterval(() => {
       this.dogService.nuevoPerro().subscribe({
         next: val => {
           this.rutaImagenPerro = val.message;
         }
       });
     }, 5000);
-    return {
-      unsubscribe() {}
+     return {
+      unsubscribe() {clearInterval(parar); }
     };
   }
+  public parar() {
+    this.nuevo().unsubscribe();
+  }
 }
+
 
