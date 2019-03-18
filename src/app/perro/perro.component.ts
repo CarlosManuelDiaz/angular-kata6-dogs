@@ -17,28 +17,13 @@ export class PerroComponent implements OnInit {
   ngOnInit() {}
 
   public comienzaPerro(): void {
-    this.miSubsc = this.nuevoperro().subscribe();
+    this.miSubsc = this.dogService.nuevoPerro5Seg().subscribe({
+      next: (val: string) => this.rutaImagenPerro = val
+    });
   }
 
   public paraPerro(): void {
     this.miSubsc.unsubscribe();
-  }
-
-  private nuevoperro(): Observable<void> {
-    return new Observable(() => {
-      const interval = setInterval(() => {
-
-        this.dogService.nuevoPerro().subscribe({
-          next: val => {
-            this.rutaImagenPerro = val.message;
-          }
-        });
-
-      }, 5000);
-      return {
-        unsubscribe() { clearInterval(interval) }
-      };
-    });
   }
 }
 
