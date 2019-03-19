@@ -13,20 +13,19 @@ export class PerroComponent implements OnInit {
   public rutaImagenPerro: string;
   private miSubsc: Subscription;
 
-  ngOnInit() {}
  constructor(private dogService: DogService) {}
 
-
+  ngOnInit() { }
 
   public comienzaPerro(): void {
-  this.miSubsc = this.dogService.nuevoPerro5Seg().subscribe({
-    next: (val: string) => this.rutaImagenPerro = val
-  });
-}
+    this.miSubsc = this.dogService.nuevoPerro5Seg().subscribe({
+      next: (val: string) => this.rutaImagenPerro = val
+    });
+  }
 
   public paraPerro(): void {
-  this.miSubsc.unsubscribe();
-}
+    this.miSubsc.unsubscribe();
+  }
 
 }
 
