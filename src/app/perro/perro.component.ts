@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DogService } from '../dog.service';
-import { Subscription } from 'rxjs';
-
+import { Observable, Subscription } from 'rxjs';
+import { Perro } from '../perro';
 
 @Component({
   selector: 'app-perro',
@@ -11,30 +11,23 @@ import { Subscription } from 'rxjs';
 export class PerroComponent implements OnInit {
 
   public rutaImagenPerro: string;
-  public miSubs: Subscription;
-
-  constructor(private dogService: DogService) {
-
-  }
+  private miSubsc: Subscription;
 
   ngOnInit() {}
+ constructor(private dogService: DogService) {}
 
 
-  public nuevo() {
-     const parar = setInterval(() => {
-      this.dogService.nuevoPerro().subscribe({
-        next: val => {
-          this.rutaImagenPerro = val.message;
-        }
-      });
-    }, 5000);
-     return {
-      unsubscribe() {clearInterval(parar); }
-    };
-  }
-  public parar() {
-    this.nuevo().unsubscribe();
-  }
+
+  public comienzaPerro(): void {
+  this.miSubsc = this.dogService.nuevoPerro5Seg().subscribe({
+    next: (val: string) => this.rutaImagenPerro = val
+  });
+}
+
+  public paraPerro(): void {
+  this.miSubsc.unsubscribe();
+}
+
 }
 
 
